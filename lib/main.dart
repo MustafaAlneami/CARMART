@@ -1,4 +1,5 @@
 import 'package:carmart/features/admin/admin_page.dart';
+import 'package:carmart/features/home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AdminPageView(),
+      home: HomePage(),
     );
   }
 }

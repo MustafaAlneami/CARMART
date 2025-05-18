@@ -18,7 +18,7 @@ class CustomDropdownItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 45,
+      height: 50,
       child: DropdownButtonFormField2(
         items: items,
         validator: (value) => value == null ? valid : null,
