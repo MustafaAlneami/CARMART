@@ -17,10 +17,26 @@ class CustomDropdownItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField2(
-      items: items,
-      validator: (value) => value == null ? valid : null,
-      onChanged: onChanged,
+    return SizedBox(
+      height: 45,
+      child: DropdownButtonFormField2(
+        items: items,
+        validator: (value) => value == null ? valid : null,
+        onChanged: onChanged,
+        hint: Text(
+          hint,
+          style: TextStyle(color: Colors.grey, fontSize: 12),
+        ),
+        iconStyleData: IconStyleData(icon: Icon(Icons.arrow_drop_down)),
+        decoration: InputDecoration(
+          hintStyle: TextStyle(color: Colors.grey),
+          contentPadding: EdgeInsets.all(15),
+          filled: true,
+          fillColor: Colors.white,
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 0)),
+        ),
+      ),
     );
   }
 }

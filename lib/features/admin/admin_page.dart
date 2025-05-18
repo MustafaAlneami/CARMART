@@ -1,3 +1,4 @@
+import 'package:carmart/core/components/custom_button.dart';
 import 'package:carmart/core/components/custom_container.dart';
 import 'package:carmart/core/components/custom_text_field.dart';
 import 'package:carmart/features/admin/widgets/custom_dropdown_item.dart';
@@ -110,6 +111,22 @@ class _AdminPageViewState extends State<AdminPageView> {
                 });
               },
             ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+              onTap: () {},
+              width: double.infinity,
+              height: 35,
+              color: Colors.black87,
+              radius: 8,
+              child: Center(
+                child: Text(
+                  'Add Car ',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            )
           ],
         ),
       ),
