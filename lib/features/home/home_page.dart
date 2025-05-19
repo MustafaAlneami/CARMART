@@ -23,6 +23,7 @@ class _HomePage extends State<HomePage> {
     'Dodge',
     'Mercedes'
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +50,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
                 const CustomText(
-                  text: "Boston , NewYork",
+                  text: "Boston, NewYork",
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: Colors.grey,
@@ -88,14 +89,17 @@ class _HomePage extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2.0),
                       child: CustomContainer(
-                        color:
-                            selectedBrand == brand ? Colors.blue : Colors.white,
+                        color: (selectedBrand == brand ||
+                                (selectedBrand == null && brand == 'All'))
+                            ? Colors.blue
+                            : Colors.white,
                         radius: 20,
                         padding: const EdgeInsets.symmetric(
                             vertical: 5, horizontal: 10),
                         child: CustomText(
                             text: brand,
-                            color: selectedBrand == brand
+                            color: (selectedBrand == brand ||
+                                    (selectedBrand == null && brand == 'All'))
                                 ? Colors.white
                                 : Colors.black),
                       ),
@@ -105,12 +109,14 @@ class _HomePage extends State<HomePage> {
               ),
             ),
             const SizedBox(height: 20),
-            //TODO: remember the list.generate and gridview.builder
-            //TODO and the firebase stuff
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('cars').snapshots(),
+                stream: selectedBrand == null
+                    ? FirebaseFirestore.instance.collection('cars').snapshots()
+                    : FirebaseFirestore.instance
+                        .collection('cars')
+                        .where('brand', isEqualTo: selectedBrand)
+                        .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
@@ -126,7 +132,7 @@ class _HomePage extends State<HomePage> {
                     itemCount: cars.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 1 / 1.4,
+                      childAspectRatio: 1 / 1.2,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 5,
                     ),
