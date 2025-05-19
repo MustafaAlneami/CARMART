@@ -95,8 +95,8 @@ class _AuthPageState extends State<AuthPage> {
                         onPressed: () => setState(() => isLogin = !isLogin),
                         child: CustomText(
                           text: isLogin
-                              ? "🆕 Create an account"
-                              : "🔙 Already have an account? Login",
+                              ? " Create new account"
+                              : " Already have an account? Login",
                           color: Colors.black,
                         ),
                       ),
