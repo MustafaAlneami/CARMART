@@ -1,9 +1,11 @@
 import 'package:carmart/core/components/custom_container.dart';
 import 'package:carmart/core/components/custom_text.dart';
 import 'package:carmart/features/admin/admin_page.dart';
+import 'package:carmart/features/home/car_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,6 +42,7 @@ class _HomePage extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
+            // Header section
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -62,6 +65,7 @@ class _HomePage extends State<HomePage> {
               ],
             ),
             const SizedBox(height: 20),
+            // Welcome text
             Row(
               children: [
                 CustomText(
@@ -76,6 +80,7 @@ class _HomePage extends State<HomePage> {
               color: Colors.grey,
             ),
             const SizedBox(height: 20),
+            // Brand filters
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -109,6 +114,7 @@ class _HomePage extends State<HomePage> {
               ),
             ),
             const SizedBox(height: 20),
+            // Car grid
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream: selectedBrand == null
@@ -118,12 +124,32 @@ class _HomePage extends State<HomePage> {
                         .where('brand', isEqualTo: selectedBrand)
                         .snapshots(),
                 builder: (context, snapshot) {
+                  // Show shimmer loading effect while waiting for data
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return _buildShimmerLoading();
                   }
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return Center(child: Text("No cars available"));
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.car_crash,
+                            size: 50,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "No cars available",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   }
 
                   final cars = snapshot.data!.docs;
@@ -139,49 +165,69 @@ class _HomePage extends State<HomePage> {
                     itemBuilder: (context, index) {
                       final car = cars[index].data() as Map<String, dynamic>;
 
-                      return Card(
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.network(
-                                car['image'] ?? '',
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: 90,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    Icon(Icons.car_crash),
-                              ),
-                              SizedBox(height: 8),
-                              CustomText(
-                                text: car['model'] ?? '',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              CustomText(
-                                text: car['brand'] ?? '',
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  CustomText(
-                                    text: '\$ ${car['price'] ?? ''}',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
+                      return GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CarDetails(carData: car),
+                          ),
+                        ),
+                        child: Card(
+                          color: Colors.white,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.network(
+                                    car['image'] ?? '',
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: 90,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(
+                                      height: 90,
+                                      color: Colors.grey.shade200,
+                                      child: Icon(Icons.car_crash),
+                                    ),
                                   ),
-                                  Icon(
-                                    Icons.arrow_circle_right_rounded,
-                                    color: Colors.blue,
-                                  )
-                                ],
-                              )
-                            ],
+                                ),
+                                SizedBox(height: 8),
+                                CustomText(
+                                  text: car['model'] ?? '',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                CustomText(
+                                  text: car['brand'] ?? '',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CustomText(
+                                      text: '\$ ${car['price'] ?? ''}',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    Icon(
+                                      Icons.arrow_circle_right_rounded,
+                                      color: Colors.blue,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -192,6 +238,81 @@ class _HomePage extends State<HomePage> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  // Shimmer loading effect for car grid
+  Widget _buildShimmerLoading() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.grey.shade100,
+      child: GridView.builder(
+        itemCount: 6, // Show 6 shimmer items
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 1 / 1.2,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 5,
+        ),
+        itemBuilder: (context, index) {
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image placeholder
+                  Container(
+                    height: 90,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  // Model text placeholder
+                  Container(
+                    height: 12,
+                    width: 120,
+                    color: Colors.white,
+                  ),
+                  SizedBox(height: 8),
+                  // Brand text placeholder
+                  Container(
+                    height: 12,
+                    width: 80,
+                    color: Colors.white,
+                  ),
+                  SizedBox(height: 8),
+                  // Price and icon row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 12,
+                        width: 50,
+                        color: Colors.white,
+                      ),
+                      Container(
+                        height: 20,
+                        width: 20,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
