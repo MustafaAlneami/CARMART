@@ -25,7 +25,8 @@ class _AdminPageViewState extends State<AdminPageView> {
   TextEditingController _speed = TextEditingController();
   TextEditingController _seats = TextEditingController();
   List<String> availableColors = ['Black', 'Red', 'Blue'];
-  final List<String> brands = [
+  List<String> brands = [
+    'All',
     'Bmw',
     'Lamborghini',
     'Audi',
