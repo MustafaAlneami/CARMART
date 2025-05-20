@@ -1,8 +1,6 @@
 # 🚗 CarMart Flutter App
 
-Welcome to **CarMart** – a modern, cross-platform car marketplace app built with Flutter and Firebase! 
-
----
+Welcome to **CarMart** – a simple cross-platform car marketplace app built with Flutter and Firebase! 
 
 ## ✨ Features
 
