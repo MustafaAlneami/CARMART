@@ -24,7 +24,7 @@ class _AdminPageViewState extends State<AdminPageView> {
   TextEditingController _engine = TextEditingController();
   TextEditingController _speed = TextEditingController();
   TextEditingController _seats = TextEditingController();
-  List<String> availableColors = ['Black', 'Red', 'Blue'];
+  //List<String> availableColors = ['Black', 'Red', 'Blue'];
   List<String> brands = [
     'All',
     'Bmw',
@@ -37,7 +37,7 @@ class _AdminPageViewState extends State<AdminPageView> {
   String? selectedBrand;
   File? _image;
   bool isLoading = false;
-
+//
   Future<void> _pickImage() async {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
