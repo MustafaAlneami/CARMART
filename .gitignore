@@ -1,8 +1,7 @@
 # Firebase & API keys
 .env
 .env.local
-firebaseServiceAccount.json
-google-services.json
+android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 
 # IDE & system files
