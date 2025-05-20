@@ -10,7 +10,13 @@ Welcome to **CarMart** – a simple cross-platform car marketplace app built wit
 - 🔄 **Pull-to-Refresh**: Instantly refresh car listings
 
 ---
+## 🛠️ Tech Stack
 
+- **Flutter** (Dart)
+- **Firebase** (Auth, Firestore Storage)
+ 
+
+---
 ## 📸 Screenshots
 
  
@@ -24,11 +30,5 @@ Welcome to **CarMart** – a simple cross-platform car marketplace app built wit
 
 ---
 
-## 🛠️ Tech Stack
 
-- **Flutter** (Dart)
-- **Firebase** (Auth, Firestore Storage)
- 
-
----
 
