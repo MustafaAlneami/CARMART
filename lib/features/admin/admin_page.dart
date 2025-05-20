@@ -104,16 +104,8 @@ class _AdminPageViewState extends State<AdminPageView> {
           children: [
             /// colors
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomContainer(
-                  width: 40,
-                  height: 40,
-                  radius: 60,
-                  color: Colors.black,
-                  child: Icon(Icons.photo_camera_outlined,
-                      color: Colors.white, size: 17),
-                ),
                 GestureDetector(
                   onTap: () {
                     setState(() {

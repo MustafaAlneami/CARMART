@@ -111,7 +111,10 @@ class _HomePage extends State<HomePage> {
                 GestureDetector(
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(builder: (c) => _cachedAdminPage)),
-                    child: const Icon(CupertinoIcons.cloud_upload)),
+                    child: const Icon(
+                      CupertinoIcons.cloud_upload,
+                      color: Colors.blue,
+                    )),
               ],
             ),
             const SizedBox(height: 20),
@@ -251,7 +254,7 @@ class _HomePage extends State<HomePage> {
                                               BorderRadius.circular(12),
                                           child: FadeInImage.assetNetwork(
                                             placeholder:
-                                                'assets/placeholder.png', // Add a small local placeholder image
+                                                'assets/carplaceholder.webp', // Add a small local placeholder image
                                             image: car['image'] ?? '',
                                             fit: BoxFit.cover,
                                             width: double.infinity,
