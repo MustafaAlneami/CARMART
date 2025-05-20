@@ -1,3 +1,22 @@
+# Firebase & API keys
+.env
+.env.local
+firebaseServiceAccount.json
+google-services.json
+ios/Runner/GoogleService-Info.plist
+
+# IDE & system files
+*.log
+*.DS_Store
+
+# Flutter specific
+.dart_tool/
+.flutter-plugins
+.packages
+build/
+pubspec.lock
+.idea/
+
 # Miscellaneous
 *.class
 *.log
