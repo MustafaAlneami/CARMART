@@ -35,7 +35,11 @@ class _AuthPageState extends State<AuthPage> {
         Snack().success(context, "User Created in Successfully");
       }
 
-      Navigator.push(context, MaterialPageRoute(builder: (c) => HomePage()));
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (c) => HomePage()),
+        (route) => false,
+      );
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));

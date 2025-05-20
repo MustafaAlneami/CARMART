@@ -12,6 +12,7 @@ class CarDetails extends StatelessWidget {
       backgroundColor: Colors.grey.shade100,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: GestureDetector(
