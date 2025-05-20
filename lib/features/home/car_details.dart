@@ -68,12 +68,20 @@ class CarDetails extends StatelessWidget {
                       bottomLeft: Radius.circular(5),
                       bottomRight: Radius.circular(5),
                     ),
-                    child: Image.network(
-                      carData['image'],
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => Container(
-                        color: Colors.grey.shade300,
-                        child: Icon(Icons.car_crash, size: 50),
+                    child: Hero(
+                      tag: "${carData['image']}",
+                      child: ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(16), // customize as needed
+                        child: Image.network(
+                          carData['image'],
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                            color: Colors.grey.shade300,
+                            child: Icon(Icons.car_crash, size: 50),
+                          ),
+                        ),
                       ),
                     ),
                   ),

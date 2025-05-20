@@ -60,6 +60,15 @@ class _HomePage extends State<HomePage> {
     });
   }
 
+//how to load admin page faster
+  late AdminPageView _cachedAdminPage;
+
+  @override
+  void initState() {
+    super.initState();
+    _cachedAdminPage = const AdminPageView(); // Prebuild only once
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,11 +109,9 @@ class _HomePage extends State<HomePage> {
                   color: Colors.grey,
                 ),
                 GestureDetector(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (c) => const AdminPageView())),
-                    child: const Icon(CupertinoIcons.circle_grid_3x3)),
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (c) => _cachedAdminPage)),
+                    child: const Icon(CupertinoIcons.cloud_upload)),
               ],
             ),
             const SizedBox(height: 20),
@@ -235,17 +242,30 @@ class _HomePage extends State<HomePage> {
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
-                                    child: Image.network(
-                                      car['image'] ?? '',
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                      height: 90,
-                                      errorBuilder:
-                                          (context, error, stackTrace) =>
-                                              Container(
-                                        height: 90,
-                                        color: Colors.grey.shade200,
-                                        child: const Icon(Icons.car_crash),
+                                    child: Hero(
+                                      tag: car['image'] ?? '',
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          child: FadeInImage.assetNetwork(
+                                            placeholder:
+                                                'assets/placeholder.png', // Add a small local placeholder image
+                                            image: car['image'] ?? '',
+                                            fit: BoxFit.cover,
+                                            width: double.infinity,
+                                            height: 90,
+                                            imageErrorBuilder:
+                                                (context, error, stackTrace) =>
+                                                    Container(
+                                              height: 90,
+                                              color: Colors.grey.shade200,
+                                              child:
+                                                  const Icon(Icons.car_crash),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
