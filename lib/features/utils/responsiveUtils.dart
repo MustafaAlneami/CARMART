@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Responsive utility class for handling different screen sizes with web compatibility
+/// Responsive utility class for handling different screen sizes
+///  with also the web compatibility
 class ResponsiveUtils {
   static const double mobileBreakpoint = 600;
   static const double tabletBreakpoint = 1024;
@@ -23,6 +24,7 @@ class ResponsiveUtils {
   }
 
   /// Get responsive padding based on screen size
+  ///TODO need to be eddited after testing
   static EdgeInsets getResponsivePadding(BuildContext context) {
     if (isMobile(context)) {
       return const EdgeInsets.symmetric(horizontal: 16.0);
@@ -59,7 +61,8 @@ class ResponsiveUtils {
   }
 
   /// Get responsive font size
-  static double getResponsiveFontSize(BuildContext context, double baseFontSize) {
+  static double getResponsiveFontSize(
+      BuildContext context, double baseFontSize) {
     final width = MediaQuery.of(context).size.width;
     if (width < mobileBreakpoint) {
       return baseFontSize;
@@ -111,7 +114,7 @@ class ResponsiveUtils {
   /// Get responsive layout padding for centering content on larger screens
   static EdgeInsets getResponsiveLayoutPadding(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     if (isMobile(context)) {
       return const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0);
     } else if (isTablet(context)) {
@@ -172,7 +175,8 @@ class ResponsiveUtils {
   }
 
   /// Get responsive border radius
-  static double getBorderRadius(BuildContext context, {double baseRadius = 12}) {
+  static double getBorderRadius(BuildContext context,
+      {double baseRadius = 12}) {
     if (isMobile(context)) {
       return baseRadius;
     } else if (isTablet(context)) {
