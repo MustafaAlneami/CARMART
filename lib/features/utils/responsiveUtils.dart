@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Responsive utility class for handling different screen sizes
+/// Responsive utility class for handling different screen sizes with web compatibility
 class ResponsiveUtils {
   static const double mobileBreakpoint = 600;
   static const double tabletBreakpoint = 1024;
@@ -35,34 +35,40 @@ class ResponsiveUtils {
 
   /// Get responsive grid cross axis count
   static int getGridCrossAxisCount(BuildContext context) {
-    if (isMobile(context)) {
+    final width = MediaQuery.of(context).size.width;
+    if (width < mobileBreakpoint) {
       return 2;
-    } else if (isTablet(context)) {
+    } else if (width < tabletBreakpoint) {
       return 3;
-    } else {
+    } else if (width < 1400) {
       return 4;
+    } else {
+      return 5; // For very large screens
     }
   }
 
-  /// Get responsive grid child aspect ratio
+  /// Get responsive grid child aspect ratio with better web proportions
   static double getGridChildAspectRatio(BuildContext context) {
     if (isMobile(context)) {
-      return 1 / 1.2;
+      return 0.85; // Slightly taller cards for mobile
     } else if (isTablet(context)) {
-      return 1 / 1.15;
+      return 0.88;
     } else {
-      return 1 / 1.1;
+      return 0.9; // Better proportions for desktop
     }
   }
 
   /// Get responsive font size
   static double getResponsiveFontSize(BuildContext context, double baseFontSize) {
-    if (isMobile(context)) {
+    final width = MediaQuery.of(context).size.width;
+    if (width < mobileBreakpoint) {
       return baseFontSize;
-    } else if (isTablet(context)) {
+    } else if (width < tabletBreakpoint) {
       return baseFontSize * 1.1;
-    } else {
+    } else if (width < 1400) {
       return baseFontSize * 1.2;
+    } else {
+      return baseFontSize * 1.3; // For very large screens
     }
   }
 
@@ -88,14 +94,17 @@ class ResponsiveUtils {
     }
   }
 
-  /// Get responsive container constraints
+  /// Get responsive container constraints - Fixed for web
   static BoxConstraints getResponsiveConstraints(BuildContext context) {
-    if (isMobile(context)) {
+    final width = MediaQuery.of(context).size.width;
+    if (width < mobileBreakpoint) {
       return const BoxConstraints(maxWidth: double.infinity);
-    } else if (isTablet(context)) {
-      return const BoxConstraints(maxWidth: 800);
-    } else {
+    } else if (width < tabletBreakpoint) {
+      return const BoxConstraints(maxWidth: 900);
+    } else if (width < 1600) {
       return const BoxConstraints(maxWidth: 1200);
+    } else {
+      return const BoxConstraints(maxWidth: 1400); // For very large screens
     }
   }
 
@@ -104,31 +113,37 @@ class ResponsiveUtils {
     final screenWidth = MediaQuery.of(context).size.width;
     
     if (isMobile(context)) {
-      return const EdgeInsets.symmetric(horizontal: 20.0);
+      return const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0);
     } else if (isTablet(context)) {
-      return EdgeInsets.symmetric(horizontal: screenWidth * 0.08);
+      return EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.08,
+        vertical: 20.0,
+      );
     } else {
-      return EdgeInsets.symmetric(horizontal: screenWidth * 0.15);
+      return EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.12,
+        vertical: 24.0,
+      );
     }
   }
 
   /// Get responsive brand filter button size
   static EdgeInsets getBrandFilterPadding(BuildContext context) {
     if (isMobile(context)) {
-      return const EdgeInsets.symmetric(vertical: 5, horizontal: 10);
+      return const EdgeInsets.symmetric(vertical: 8, horizontal: 12);
     } else if (isTablet(context)) {
-      return const EdgeInsets.symmetric(vertical: 8, horizontal: 16);
+      return const EdgeInsets.symmetric(vertical: 10, horizontal: 16);
     } else {
-      return const EdgeInsets.symmetric(vertical: 10, horizontal: 20);
+      return const EdgeInsets.symmetric(vertical: 12, horizontal: 20);
     }
   }
 
   /// Get responsive avatar radius
   static double getAvatarRadius(BuildContext context) {
     if (isMobile(context)) {
-      return 20;
+      return 22;
     } else if (isTablet(context)) {
-      return 25;
+      return 26;
     } else {
       return 30;
     }
@@ -139,9 +154,9 @@ class ResponsiveUtils {
     if (isMobile(context)) {
       return baseSize;
     } else if (isTablet(context)) {
-      return baseSize * 1.2;
+      return baseSize * 1.15;
     } else {
-      return baseSize * 1.4;
+      return baseSize * 1.3;
     }
   }
 
@@ -165,5 +180,54 @@ class ResponsiveUtils {
     } else {
       return baseRadius * 1.2;
     }
+  }
+
+  /// Get responsive card image height
+  static double getCardImageHeight(BuildContext context) {
+    if (isMobile(context)) {
+      return 100;
+    } else if (isTablet(context)) {
+      return 120;
+    } else {
+      return 140;
+    }
+  }
+
+  /// Get responsive grid spacing
+  static double getGridSpacing(BuildContext context) {
+    if (isMobile(context)) {
+      return 8;
+    } else if (isTablet(context)) {
+      return 12;
+    } else {
+      return 16;
+    }
+  }
+
+  /// Get responsive content width for centering
+  static double getContentWidth(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < mobileBreakpoint) {
+      return screenWidth;
+    } else if (screenWidth < tabletBreakpoint) {
+      return 900;
+    } else if (screenWidth < 1600) {
+      return 1200;
+    } else {
+      return 1400;
+    }
+  }
+
+  /// Check if we're on web platform
+  static bool isWeb() {
+    return identical(0, 0.0); // Simple web detection
+  }
+
+  /// Get safe area padding for web
+  static EdgeInsets getSafeAreaPadding(BuildContext context) {
+    if (isWeb()) {
+      return const EdgeInsets.all(0);
+    }
+    return MediaQuery.of(context).padding;
   }
 }
