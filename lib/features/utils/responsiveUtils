@@ -1,0 +1,169 @@
+import 'package:flutter/material.dart';
+
+/// Responsive utility class for handling different screen sizes
+class ResponsiveUtils {
+  static const double mobileBreakpoint = 600;
+  static const double tabletBreakpoint = 1024;
+  static const double desktopBreakpoint = 1200;
+
+  /// Check if current screen is mobile
+  static bool isMobile(BuildContext context) {
+    return MediaQuery.of(context).size.width < mobileBreakpoint;
+  }
+
+  /// Check if current screen is tablet
+  static bool isTablet(BuildContext context) {
+    return MediaQuery.of(context).size.width >= mobileBreakpoint &&
+        MediaQuery.of(context).size.width < tabletBreakpoint;
+  }
+
+  /// Check if current screen is desktop
+  static bool isDesktop(BuildContext context) {
+    return MediaQuery.of(context).size.width >= tabletBreakpoint;
+  }
+
+  /// Get responsive padding based on screen size
+  static EdgeInsets getResponsivePadding(BuildContext context) {
+    if (isMobile(context)) {
+      return const EdgeInsets.symmetric(horizontal: 16.0);
+    } else if (isTablet(context)) {
+      return const EdgeInsets.symmetric(horizontal: 32.0);
+    } else {
+      return const EdgeInsets.symmetric(horizontal: 64.0);
+    }
+  }
+
+  /// Get responsive grid cross axis count
+  static int getGridCrossAxisCount(BuildContext context) {
+    if (isMobile(context)) {
+      return 2;
+    } else if (isTablet(context)) {
+      return 3;
+    } else {
+      return 4;
+    }
+  }
+
+  /// Get responsive grid child aspect ratio
+  static double getGridChildAspectRatio(BuildContext context) {
+    if (isMobile(context)) {
+      return 1 / 1.2;
+    } else if (isTablet(context)) {
+      return 1 / 1.15;
+    } else {
+      return 1 / 1.1;
+    }
+  }
+
+  /// Get responsive font size
+  static double getResponsiveFontSize(BuildContext context, double baseFontSize) {
+    if (isMobile(context)) {
+      return baseFontSize;
+    } else if (isTablet(context)) {
+      return baseFontSize * 1.1;
+    } else {
+      return baseFontSize * 1.2;
+    }
+  }
+
+  /// Get responsive spacing
+  static double getResponsiveSpacing(BuildContext context, double baseSpacing) {
+    if (isMobile(context)) {
+      return baseSpacing;
+    } else if (isTablet(context)) {
+      return baseSpacing * 1.2;
+    } else {
+      return baseSpacing * 1.4;
+    }
+  }
+
+  /// Get responsive app bar height
+  static double getAppBarHeight(BuildContext context) {
+    if (isMobile(context)) {
+      return 60;
+    } else if (isTablet(context)) {
+      return 70;
+    } else {
+      return 80;
+    }
+  }
+
+  /// Get responsive container constraints
+  static BoxConstraints getResponsiveConstraints(BuildContext context) {
+    if (isMobile(context)) {
+      return const BoxConstraints(maxWidth: double.infinity);
+    } else if (isTablet(context)) {
+      return const BoxConstraints(maxWidth: 800);
+    } else {
+      return const BoxConstraints(maxWidth: 1200);
+    }
+  }
+
+  /// Get responsive layout padding for centering content on larger screens
+  static EdgeInsets getResponsiveLayoutPadding(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    
+    if (isMobile(context)) {
+      return const EdgeInsets.symmetric(horizontal: 20.0);
+    } else if (isTablet(context)) {
+      return EdgeInsets.symmetric(horizontal: screenWidth * 0.08);
+    } else {
+      return EdgeInsets.symmetric(horizontal: screenWidth * 0.15);
+    }
+  }
+
+  /// Get responsive brand filter button size
+  static EdgeInsets getBrandFilterPadding(BuildContext context) {
+    if (isMobile(context)) {
+      return const EdgeInsets.symmetric(vertical: 5, horizontal: 10);
+    } else if (isTablet(context)) {
+      return const EdgeInsets.symmetric(vertical: 8, horizontal: 16);
+    } else {
+      return const EdgeInsets.symmetric(vertical: 10, horizontal: 20);
+    }
+  }
+
+  /// Get responsive avatar radius
+  static double getAvatarRadius(BuildContext context) {
+    if (isMobile(context)) {
+      return 20;
+    } else if (isTablet(context)) {
+      return 25;
+    } else {
+      return 30;
+    }
+  }
+
+  /// Get responsive icon size
+  static double getIconSize(BuildContext context, {double baseSize = 24}) {
+    if (isMobile(context)) {
+      return baseSize;
+    } else if (isTablet(context)) {
+      return baseSize * 1.2;
+    } else {
+      return baseSize * 1.4;
+    }
+  }
+
+  /// Get responsive card elevation
+  static double getCardElevation(BuildContext context) {
+    if (isMobile(context)) {
+      return 2;
+    } else if (isTablet(context)) {
+      return 3;
+    } else {
+      return 4;
+    }
+  }
+
+  /// Get responsive border radius
+  static double getBorderRadius(BuildContext context, {double baseRadius = 12}) {
+    if (isMobile(context)) {
+      return baseRadius;
+    } else if (isTablet(context)) {
+      return baseRadius * 1.1;
+    } else {
+      return baseRadius * 1.2;
+    }
+  }
+}
