@@ -50,6 +50,8 @@ class ResponsiveUtils {
   }
 
   /// Get responsive grid child aspect ratio with better web proportions
+  // this means that the cards will be more proportionate
+
   static double getGridChildAspectRatio(BuildContext context) {
     if (isMobile(context)) {
       return 0.85; // Slightly taller cards for mobile
@@ -98,6 +100,10 @@ class ResponsiveUtils {
   }
 
   /// Get responsive container constraints - Fixed for web
+  /// constraints is used to limit the maximum width of the content
+  /// based on the screen size, ensuring it doesn't stretch too wide
+  /// and remains visually appealing on larger screens.
+  /// This is useful for web applications where content can become too wide
   static BoxConstraints getResponsiveConstraints(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     if (width < mobileBreakpoint) {
