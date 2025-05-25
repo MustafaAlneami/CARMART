@@ -18,6 +18,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+  // '?' means that the variable can be null
+  // This is used to store the selected brand for filtering cars
+  //'!' means that the variable is not null
   String? selectedBrand;
   bool isRefreshing = false;
   final List<String> brands = [

@@ -125,6 +125,7 @@ class ResponsiveUtils {
   }
 
   /// Get responsive layout padding for centering content on larger screens
+  /// This method provides padding that adjusts based on the screen size,
   static EdgeInsets getResponsiveLayoutPadding(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -222,6 +223,7 @@ class ResponsiveUtils {
   }
 
   /// Get responsive content width for centering
+  /// This method provides a width that adjusts based on the screen size,
   static double getContentWidth(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     if (screenWidth < mobileBreakpoint) {
@@ -238,6 +240,8 @@ class ResponsiveUtils {
   /// Check if we're on web platform
   static bool isWeb() {
     return identical(0, 0.0); // Simple web detection
+    //identical is a Dart function that checks if two objects are the same instance.
+    // In this case, it checks if the integer 0 is the same as the double 0.0.
   }
 
   /// Get safe area padding for web
