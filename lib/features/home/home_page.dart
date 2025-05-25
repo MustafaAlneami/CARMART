@@ -299,8 +299,7 @@ class _HomePage extends State<HomePage> {
   }
 
   Widget _buildCarCard(Map<String, dynamic> car) {
-    // Debug print for image URL
-    print('Car image URL: \'${car['image']?.toString()}\'');
+    // Ensure car data is not null and has required fields
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -462,7 +461,9 @@ class _HomePage extends State<HomePage> {
       highlightColor: Colors.grey.shade100,
       child: GridView.builder(
         physics: const AlwaysScrollableScrollPhysics(),
-        itemCount: ResponsiveUtils.getGridCrossAxisCount(context) * 3,
+        //*4 means 4 rows
+        //itemCount means the total number of items in the grid
+        itemCount: ResponsiveUtils.getGridCrossAxisCount(context) * 4,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: ResponsiveUtils.getGridCrossAxisCount(context),
           childAspectRatio: ResponsiveUtils.getGridChildAspectRatio(context),
@@ -485,6 +486,8 @@ class _HomePage extends State<HomePage> {
                 children: [
                   // Image placeholder
                   Expanded(
+                    //flex 3 means that this widget will take 3 parts
+                    //of the available space
                     flex: 3,
                     child: Container(
                       width: double.infinity,
