@@ -104,9 +104,16 @@ class ResponsiveUtils {
   /// based on the screen size, ensuring it doesn't stretch too wide
   /// and remains visually appealing on larger screens.
   /// This is useful for web applications where content can become too wide
+  ///
+  /// getResponsiveConstraints() gives a max width based on screen size.
+  ///constraints define how big a widget can be.
+  ///This keeps your layout responsive and readable on all screens 📱💻🖥️.
   static BoxConstraints getResponsiveConstraints(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     if (width < mobileBreakpoint) {
+      //double.infinity means it will take all the available space
+      // this is used for mobile screens to allow full width
+
       return const BoxConstraints(maxWidth: double.infinity);
     } else if (width < tabletBreakpoint) {
       return const BoxConstraints(maxWidth: 900);
