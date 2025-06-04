@@ -298,6 +298,7 @@ class _HomePage extends State<HomePage> {
     );
   }
 
+//lets go
   Widget _buildCarCard(Map<String, dynamic> car) {
     // Ensure car data is not null and has required fields
     return GestureDetector(
